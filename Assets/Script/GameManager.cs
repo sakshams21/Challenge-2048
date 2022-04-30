@@ -4,66 +4,68 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     [System.Serializable]
     public struct Slots
     {
-        public Image Img;
-        public TextMeshProUGUI Txt;
-        public int Value;
-        public Vector2 Cell_Pos;
+        [FormerlySerializedAs("Img")] public Image img;
+        [FormerlySerializedAs("Txt")] public TextMeshProUGUI txt;
+        [FormerlySerializedAs("Value")] public int value;
+        [FormerlySerializedAs("Cell_Pos")] public Vector2 cellPos;
         public bool isfree;
     }
 
-    [Header("Script Ref")]
-    public NumberColors Color_ref;
+    [FormerlySerializedAs("Color_ref")] [Header("Script Ref")]
+    public NumberColors colorRef;
 
 
+    [FormerlySerializedAs("GridSlots")]
     [Space(10f)]
     [Header("Slots Ref")]
 
-    public Slots[] GridSlots;
+    public Slots[] gridSlots;
 
     public int x1, x2, x3, x4;
     public int[,] Matrix_Blueprint = new int[4, 4] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
 
     //---------METHODS AREA-------------------------
-    public void ColorToDefault(Image img) => img.color = Color_ref.Number_Color[0];
+    public void ColorToDefault(Image img) => img.color = colorRef.Number_Color[0];
 
     //for individual cells
     public void Assign_Value_Color(int value, int SlotIndex)
     {
-        GridSlots[SlotIndex].Value = value;
-        GridSlots[SlotIndex].Txt.text = value.ToString();
-        GridSlots[SlotIndex].isfree = GridSlots[SlotIndex].Value == 0 ? true : false;
-        GridSlots[SlotIndex].Img.color = Color_ref.Number_Color[(int)Mathf.Log(value, 2)];
+        gridSlots[SlotIndex].value = value;
+        gridSlots[SlotIndex].txt.text = value.ToString();
+        gridSlots[SlotIndex].isfree = gridSlots[SlotIndex].value == 0 ? true : false;
+        gridSlots[SlotIndex].img.color = colorRef.Number_Color[(int)Mathf.Log(value, 2)];
     }
 
     public void ChangeColor_via_Slots(int value, Slots var_slot)
     {
-        var_slot.Value = value;
-        var_slot.Txt.text = value.ToString();
-        var_slot.isfree = var_slot.Value == 0 ? true : false;
-        var_slot.Img.color = Color_ref.Number_Color[(int)Mathf.Log(value, 2)];
+        var_slot.value = value;
+        var_slot.txt.text = value.ToString();
+        var_slot.isfree = var_slot.value == 0 ? true : false;
+        var_slot.img.color = colorRef.Number_Color[(int)Mathf.Log(value, 2)];
     }
 
 
     //will check for all the cells
     private void Check_all_Slots()
     {
-        for (int i = 0; i < GridSlots.Length; i++)
+        for (int i = 0; i < gridSlots.Length; i++)
         {
-            if (GridSlots[i].Value == 0)
+            if (gridSlots[i].value == 0)
             {
                 Assign_Value_Color(0, i);
-                GridSlots[i].isfree = true;
+                gridSlots[i].isfree = true;
             }
             else
             {
-                Assign_Value_Color(GridSlots[i].Value, i);
-                GridSlots[i].isfree = false;
+                Assign_Value_Color(gridSlots[i].value, i);
+                gridSlots[i].isfree = false;
             }
         }
     }
@@ -87,9 +89,9 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < Matrix_Blueprint.GetLength(1); j++)
             {
-                for (int k = 0; k < GridSlots.Length; k++)
+                for (int k = 0; k < gridSlots.Length; k++)
                 {
-                    if (GridSlots[k].Cell_Pos.x == i + 1 && GridSlots[k].Cell_Pos.y == j + 1)
+                    if (gridSlots[k].cellPos.x == i + 1 && gridSlots[k].cellPos.y == j + 1)
 
                         Assign_Value_Color(Matrix_Blueprint[i, j], k);
                 }
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
     {
         int[,] DummyMatrix = new int[Matrix_Blueprint.GetLength(0), Matrix_Blueprint.GetLength(1)];
         int[] localArray = new int[Matrix_Blueprint.GetLength(1)];
-        int[] localOperation_Array = new int[Matrix_Blueprint.GetLength(1)];
+        int[] localOperationArray = new int[Matrix_Blueprint.GetLength(1)];
         int count = 0;
         int x = 0;
         bool skip = false;
@@ -138,14 +140,14 @@ public class GameManager : MonoBehaviour
             {
                 if (x == localArray[i])
                 {
-                    localOperation_Array.SetValue(localArray[i] * 2, count);
+                    localOperationArray.SetValue(localArray[i] * 2, count);
                     x = 0;
                     count++;
                     skip = true;
                 }
                 else
                 {
-                    localOperation_Array.SetValue(localArray[i], count);
+                    localOperationArray.SetValue(localArray[i], count);
                     x = localArray[i];
                     count++;
                 }
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        foreach (var item in localOperation_Array)
+        foreach (var item in localOperationArray)
         {
 
             print(item);
