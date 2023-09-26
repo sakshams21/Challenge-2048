@@ -5,6 +5,7 @@
 
 Welcome to the Unity 2048 Clone repository! This personal project is a recreation of the popular 2048 puzzle game, featuring my unique gameplay logic and design. If you enjoy challenging puzzle games, you're in for a treat!
 
+![Game Screenshot](Preview/2048.gif)
 ## Features
 
 - 🧩 A custom 2048 gameplay logic that adds a unique twist to the classic game(Tiles dissapear after reaching 1024 and it leaves a permanent immoveable Block).
