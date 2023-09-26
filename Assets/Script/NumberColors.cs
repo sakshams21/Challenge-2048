@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NumberColors : MonoBehaviour
+namespace Script
 {
+    public class NumberColors : MonoBehaviour
+    {
 
-    public Color[] Number_Color;
+        public Color[] Number_Color;
+    }
 }
