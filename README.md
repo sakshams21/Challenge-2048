@@ -25,6 +25,9 @@ Welcome to the Unity 2048 Clone repository! This personal project is a recreatio
 3. 🌠 Open the `2048Scene` scene.
 4. ▶️ Play the scene to start playing the 2048 clone.
 
+## Another Approach(maybe)
+![Game Screenshot](Preview/rider64_0qJSLKoLIe.png)
+
 ## Usage
 
 - Use arrow keys to move tiles.
